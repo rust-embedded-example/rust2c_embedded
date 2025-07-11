@@ -1,0 +1,18 @@
+[build]
+# GD32H759 使用 ARM Cortex-M7 内核，支持硬件浮点运算
+target = "thumbv7em-none-eabihf"
+
+[target.thumbv7em-none-eabihf]
+# 使用 rust-lld 作为链接器
+linker = "rust-lld"
+# 链接器参数
+rustflags = [
+  # 生成obj文件
+  "--emit=obj",
+  # 优化编译
+  "-O",
+  # 使用Cortex-M7的指令集
+  "-C", "target-cpu=cortex-m7",
+  # 使用LLD链接器
+  "-C", "linker=rust-lld",
+] 
