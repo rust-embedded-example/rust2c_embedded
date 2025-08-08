@@ -16,3 +16,6 @@ rustflags = [
   # 使用LLD链接器
   "-C", "linker=rust-lld",
 ] 
+
+[unstable]
+build-std = ["core", "alloc"]

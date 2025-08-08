@@ -8,5 +8,8 @@ edition = "2021"
 crate-type = ["staticlib"]
 
 [dependencies]
+freertos-rust = {git = "https://github.com/AnlangA/FreeRTOS-rust.git"}
 
+[build-dependencies]
+cbindgen = "0.29.0"
 
