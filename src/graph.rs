@@ -4,7 +4,7 @@
 
 use alloc::{vec, vec::Vec};
 use log::{debug, error, info};
-use alloc::string::{String, ToString};
+use alloc::string::String;
 use alloc::format;
 
 /// 表示图中可附着在节点上的“单元”。
@@ -12,7 +12,7 @@ use alloc::format;
 #[derive(Clone)]
 pub struct Unit {
     /// 单元的唯一标识。
-    pub id: usize,
+    pub id: u32,
 }
 
 /// 边数据。
@@ -67,12 +67,13 @@ impl Graph {
     /// 如果单元已在某个节点上，函数会 `panic!`。
     #[allow(dead_code)]
     pub fn add_unit_to_node(&mut self, node_id: usize, unit: Unit) {
-        if node_id < self.node_units.len() && unit.id < self.unit_to_node.len() {
-            if self.unit_to_node[unit.id].is_some() {
+        let uid = unit.id as usize;
+        if node_id < self.node_units.len() && uid < self.unit_to_node.len() {
+            if self.unit_to_node[uid].is_some() {
                 panic!("Unit {} already assigned to a node", unit.id);
             }
             self.node_units[node_id].push(unit.clone());
-            self.unit_to_node[unit.id] = Some(node_id);
+            self.unit_to_node[uid] = Some(node_id);
         } else {
             error!(
                 "Node or unit index out of bounds: node_id={}, unit_id={}, max_nodes={}, max_unit_id={}",
@@ -92,8 +93,9 @@ impl Graph {
 
     /// 获取指定单元所在的节点。
     #[allow(dead_code)]
-    pub fn get_node_of_unit(&self, unit_id: usize) -> Option<usize> {
-        self.unit_to_node.get(unit_id).and_then(|opt| *opt)
+    pub fn get_node_of_unit(&self, unit_id: u32) -> Option<usize> {
+        let uid = unit_id as usize;
+        self.unit_to_node.get(uid).and_then(|opt| *opt)
     }
 
     /// 获取指定节点的邻居节点及其边数据。
@@ -135,14 +137,21 @@ impl Graph {
 
         info!("Legend: '.' no edge, numbers = weight (int)");
 
-        // Units on nodes
+        // Units on nodes (streamed, low-allocation)
         info!("Units on nodes:");
         for i in 0..n {
+            info!("  Node {}", i);
             if let Some(units) = self.node_units.get(i) {
-                if !units.is_empty() {
-                    let unit_ids: Vec<_> = units.iter().map(|u| u.id.to_string()).collect();
-                    info!("  {}: [{}]", i, unit_ids.join(", "));
+                if units.is_empty() {
+                    info!("    []");
+                } else {
+                    info!("    Units:");
+                    for u in units {
+                        info!("      - {}", u.id);
+                    }
                 }
+            } else {
+                info!("    []");
             }
         }
 

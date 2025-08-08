@@ -13,6 +13,7 @@ cbindgen::Builder::new()
         .include_item("Unit")
         .include_item("EdgeData")
         .include_item("Graph")
+        .exclude_item("sys_log")
         .generate()
         .expect("Unable to generate bindings")
       .write_to_file("Grap.h");

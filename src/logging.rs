@@ -56,8 +56,7 @@ pub fn init() -> Result<(), SetLoggerError> {
     log::set_logger(&LOGGER).map(|()| log::set_max_level(LevelFilter::Debug))
 }
 
-// cbindgen: ignore
-extern "C" {
+unsafe extern "C" {
     fn sys_log(
         log_type: c_uint,
         level: c_uint,
