@@ -8,6 +8,7 @@ edition = "2021"
 crate-type = ["staticlib"]
 
 [dependencies]
+log = "0.4.17"
 freertos-rust = {git = "https://github.com/AnlangA/FreeRTOS-rust.git"}
 
 [build-dependencies]
