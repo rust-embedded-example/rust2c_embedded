@@ -3,11 +3,12 @@
 // Concrete data types used by grap-rs generics in this binary crate.
 // All types are no_std friendly.
 
-/// Unit data as a C-compatible structure.
+/// Unit data as a C-compatible structure with linked list support.
 #[repr(C)]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct UnitData {
     pub value: u32,
+    pub next: *mut UnitData,  // Pointer to next unit in the linked list
 }
 
 /// Edge data as a C-compatible structure.
@@ -27,11 +28,22 @@ pub struct NodeData {
 // Inherent methods on UnitData (no trait)
 impl UnitData {
     #[inline]
-    pub const fn new(value: u32) -> Self { Self { value } }
+    pub const fn new(value: u32) -> Self { Self { value, next: core::ptr::null_mut() } }
+
+    #[inline]
+    pub const fn new_with_next(value: u32, next: *mut UnitData) -> Self { Self { value, next } }
+
     #[inline]
     pub fn value(&self) -> u32 { self.value }
+
     #[inline]
     pub fn set_value(&mut self, v: u32) { self.value = v; }
+
+    #[inline]
+    pub fn next(&self) -> *mut UnitData { self.next }
+
+    #[inline]
+    pub fn set_next(&mut self, next: *mut UnitData) { self.next = next; }
 }
 
 

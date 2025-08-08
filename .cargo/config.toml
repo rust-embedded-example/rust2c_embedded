@@ -19,3 +19,6 @@ rustflags = [
 
 [unstable]
 build-std = ["core", "alloc"]
+
+[net]
+git-fetch-with-cli = true
