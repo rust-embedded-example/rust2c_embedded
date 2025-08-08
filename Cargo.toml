@@ -1,16 +1,23 @@
 [package]
 name = "gd32"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [lib]
 # 生成静态库.lib文件
 crate-type = ["staticlib"]
 
 [dependencies]
-log = "0.4.17"
+log = { version = "0.4", default-features = false }
 freertos-rust = {git = "https://github.com/AnlangA/FreeRTOS-rust.git"}
+ccu_log = { git = "https://github.com/AnlangA/ccu_log.git" }
+grap-rs = { git = "https://github.com/AnlangA/grap-rs.git" }
 
 [build-dependencies]
 cbindgen = "0.29.0"
 
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"

@@ -78,6 +78,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "ccu_log"
+version = "0.1.0"
+source = "git+https://github.com/AnlangA/ccu_log.git#ccc81224b2d0ca27a6513b53b4249cbc0412131a"
+dependencies = [
+ "log",
+]
+
+[[package]]
 name = "cfg-if"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -148,7 +156,9 @@ name = "gd32"
 version = "0.1.0"
 dependencies = [
  "cbindgen",
+ "ccu_log",
  "freertos-rust",
+ "grap-rs",
  "log",
 ]
 
@@ -162,6 +172,14 @@ dependencies = [
  "libc",
  "r-efi",
  "wasi",
+]
+
+[[package]]
+name = "grap-rs"
+version = "0.1.0"
+source = "git+https://github.com/AnlangA/grap-rs.git#58a0593f5ee239700267e558e61b4b0dd254cd64"
+dependencies = [
+ "log",
 ]
 
 [[package]]
