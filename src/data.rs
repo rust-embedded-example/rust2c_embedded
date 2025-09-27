@@ -11,20 +11,6 @@ pub struct UnitData {
     pub next: *mut UnitData,  // Pointer to next unit in the linked list
 }
 
-/// Edge data as a C-compatible structure.
-#[repr(C)]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct EdgeData {
-    pub id_value: u32,
-}
-
-/// Node data as a C-compatible structure.
-#[repr(C)]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct NodeData {
-    pub id: usize,
-}
-
 // Inherent methods on UnitData (no trait)
 impl UnitData {
     #[inline]
@@ -44,6 +30,21 @@ impl UnitData {
 
     #[inline]
     pub fn set_next(&mut self, next: *mut UnitData) { self.next = next; }
+}
+
+
+/// Edge data as a C-compatible structure.
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct EdgeData {
+    pub id_value: u32,
+}
+
+/// Node data as a C-compatible structure.
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct NodeData {
+    pub id: usize,
 }
 
 
